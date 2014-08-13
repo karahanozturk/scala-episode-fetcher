@@ -1,0 +1,167 @@
+<?xml version="1.0" encoding="UTF-8"?><?xml-stylesheet type="text/xsl" href="/nitro/api/v1/nitro.xsl?uri=/nitro/api/"?>
+<nitro xsi:schemaLocation="http://www.bbc.co.uk/nitro/ https://api.bbc.co.uk/nitro/api/schema"
+       xmlns="http://www.bbc.co.uk/nitro/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+    <results page="1" page_size="21" total="1" more_than="0">
+        <episode>
+            <pid>p00lfrb3</pid>
+            <partner>s0000001</partner>
+            <updated_time>2014-06-11T09:44:45Z</updated_time>
+            <embargoed>false</embargoed>
+            <title>The First Impact</title>
+            <synopses>
+                <short>Short Synopsis</short>
+                <medium>Medium Synopsis</medium>
+                <long>Long Synopsis</long>
+            </synopses>
+            <media_type>Video</media_type>
+            <image pid="p01h7ms3" template_url="http://ichef.bbci.co.uk/images/ic/$recipe/p01h7ms3.jpg"/>
+            <release_date>1972-11-12Z</release_date>
+            <is_stacked>false</is_stacked>
+            <has_guidance>false</has_guidance>
+            <master_brand result_type="master_brand" mid="bbc_webonly" href="/nitro/api/master_brands?mid=bbc_webonly"/>
+            <episode_of result_type="series" pid="b00ffbjg" position="1" href="/nitro/api/programmes?pid=b00ffbjg"/>
+            <genre_groups result_type="genre_groups" result_type_deprecated="true"
+                          href="/nitro/api/v1/episodes/p00lfrb3/genre_groups/" href_deprecated="true"/>
+            <formats result_type="formats" result_type_deprecated="true" href="/nitro/api/v1/episodes/p00lfrb3/formats/"
+                     href_deprecated="true"/>
+            <ancestors result_type="mixed" href="/nitro/api/v1/episodes/p00lfrb3/ancestors/"/>
+            <items_for result_type="item" href="/nitro/api/items?programme=p00lfrb3"/>
+        </episode>
+    </results>
+    <filters>
+        <filter name="audio_described" type="boolean" title="filter for subset of programmes that are audio-described"
+                release_status="supported">
+            <option value="true" title="filter for programmes that are audio-described"
+                    href="/nitro/api/programmes?audio_described=true&amp;availability=available&amp;availability_entity_type=episode&amp;descendants_of=b00ffbjg&amp;entity_type=episode&amp;media_set=pc&amp;media_type=audio_video&amp;page=1&amp;page_size=21&amp;sort=release_date&amp;sort_direction=descending"/>
+            <option value="false" title="filter for programmes that are not audio-described"
+                    href="/nitro/api/programmes?audio_described=false&amp;availability=available&amp;availability_entity_type=episode&amp;descendants_of=b00ffbjg&amp;entity_type=episode&amp;media_set=pc&amp;media_type=audio_video&amp;page=1&amp;page_size=21&amp;sort=release_date&amp;sort_direction=descending"/>
+        </filter>
+        <filter name="availability" type="string" title="filter for subset of programmes that have availability"
+                multiple_values="true" release_status="supported">
+            <option value="pending" title="filter for programmes that are expected to become available imminently"
+                    release_status="beta"
+                    href="/nitro/api/programmes?availability=pending&amp;availability=available&amp;availability_entity_type=episode&amp;descendants_of=b00ffbjg&amp;entity_type=episode&amp;media_set=pc&amp;media_type=audio_video&amp;page=1&amp;page_size=21&amp;sort=release_date&amp;sort_direction=descending"/>
+        </filter>
+        <filter name="availability" type="daytime_duration"
+                title="filter for programmes that will become available within given duration" multiple_values="true"
+                release_status="beta"/>
+        <filter name="availability_from" type="datetime"
+                title="filter for subset of programmes that are available after or at the specified datetime"
+                release_status="deprecated" deprecated="true" deprecated_since="2014-01-22"/>
+        <filter name="availability_to" type="datetime"
+                title="filter for subset of programmes that are available before the specified datetime"
+                release_status="deprecated" deprecated="true" deprecated_since="2014-01-22"/>
+        <filter name="children_of" type="PID" title="filter for subset of programmes that have PID as immediate parent"
+                multiple_values="true" release_status="supported"/>
+        <filter name="descendants_of" type="PID" title="filter for subset of programmes that have PID as ancestor"
+                multiple_values="true" release_status="supported"/>
+        <filter name="duration" type="string" title="filter for subset of programmes that have given duration"
+                release_status="supported">
+            <option value="short" title="filter for programmes that have short duration (&lt; 5m)"
+                    href="/nitro/api/programmes?duration=short&amp;availability=available&amp;availability_entity_type=episode&amp;descendants_of=b00ffbjg&amp;entity_type=episode&amp;media_set=pc&amp;media_type=audio_video&amp;page=1&amp;page_size=21&amp;sort=release_date&amp;sort_direction=descending"/>
+            <option value="medium" title="filter for programmes that have medium duration (5m - 30m)"
+                    href="/nitro/api/programmes?duration=medium&amp;availability=available&amp;availability_entity_type=episode&amp;descendants_of=b00ffbjg&amp;entity_type=episode&amp;media_set=pc&amp;media_type=audio_video&amp;page=1&amp;page_size=21&amp;sort=release_date&amp;sort_direction=descending"/>
+            <option value="long" title="filter for programmes that have long duration (&gt; 30m)"
+                    href="/nitro/api/programmes?duration=long&amp;availability=available&amp;availability_entity_type=episode&amp;descendants_of=b00ffbjg&amp;entity_type=episode&amp;media_set=pc&amp;media_type=audio_video&amp;page=1&amp;page_size=21&amp;sort=release_date&amp;sort_direction=descending"/>
+        </filter>
+        <filter name="entity_type" type="string" title="filter for subset of programmes that have given entity type"
+                multiple_values="true" release_status="supported">
+            <option value="brand" title="filter for programmes that are brands"
+                    href="/nitro/api/programmes?entity_type=brand&amp;availability=available&amp;availability_entity_type=episode&amp;descendants_of=b00ffbjg&amp;entity_type=episode&amp;media_set=pc&amp;media_type=audio_video&amp;page=1&amp;page_size=21&amp;sort=release_date&amp;sort_direction=descending"/>
+            <option value="series" title="filter for programmes that are series"
+                    href="/nitro/api/programmes?entity_type=series&amp;availability=available&amp;availability_entity_type=episode&amp;descendants_of=b00ffbjg&amp;entity_type=episode&amp;media_set=pc&amp;media_type=audio_video&amp;page=1&amp;page_size=21&amp;sort=release_date&amp;sort_direction=descending"/>
+            <option value="clip" title="filter for programmes that are clips"
+                    href="/nitro/api/programmes?entity_type=clip&amp;availability=available&amp;availability_entity_type=episode&amp;descendants_of=b00ffbjg&amp;entity_type=episode&amp;media_set=pc&amp;media_type=audio_video&amp;page=1&amp;page_size=21&amp;sort=release_date&amp;sort_direction=descending"/>
+        </filter>
+        <filter name="format" type="string" title="filter for subset of programmes with format" multiple_values="true"
+                release_status="supported"/>
+        <filter name="genre" type="string" title="filter for subset of programmes with genre" multiple_values="true"
+                release_status="supported"/>
+        <filter name="group" type="PID" title="filter for subset of programmes which belong to the given group pid"
+                release_status="supported"/>
+        <filter name="initial_letter" type="character"
+                title="filter for subset of programmes with title beginning with initial letter librarian style (ignoring leading 'The', 'An' (Welsh), etc) 0-9 a-z"
+                release_status="supported"/>
+        <filter name="initial_letter_end" type="character"
+                title="Programmes with (librarian) titles whose initial letter is equal/before given letter. Use with initial_letter_start for a range"
+                release_status="supported"/>
+        <filter name="initial_letter_start" type="character"
+                title="Programmes with (librarian) titles whose initial letter is equal/after given letter. Use with initial_letter_end for range."
+                release_status="supported"/>
+        <filter name="initial_letter_stop" type="character"
+                title="Programmes with (librarian) titles whose initial letter is equal/before given letter. Use with initial_letter_start for a range"
+                release_status="deprecated" deprecated="true" deprecated_since="2014-01-22"
+                replaced_by="initial_letter_end"/>
+        <filter name="initial_letter_strict" type="character"
+                title="filter for subset of programmes with title beginning with initial letter" multiple_values="true"
+                release_status="supported"/>
+        <filter name="item" type="PID"
+                title="filter for subset of programmes with linked to versions which have the given item pids"
+                multiple_values="true" release_status="supported"/>
+        <filter name="master_brand" type="string" title="filter for subset of programmes with master_brand"
+                multiple_values="true" release_status="supported"/>
+        <filter name="partner_id" type="PID" title="filter for programmes by partner ID" release_status="beta"
+                multiple_values="true" prefer="partner_pid"/>
+        <filter name="partner_pid" type="PID" title="filter for programmes by partner PID" release_status="beta"
+                multiple_values="true" default="s0000001"/>
+        <filter name="people" type="PID" title="filter for subset of programmes with contributions by given people PID"
+                release_status="supported"/>
+        <filter name="pid" type="PID" title="filter for subset of programmes having given PID" multiple_values="true"
+                release_status="supported"/>
+        <filter name="promoted_for" type="string"
+                title="filter for subset of programmes which are promoted for given service" release_status="beta"/>
+        <filter name="q" type="string"
+                title="filter for subset of programmes matching supplied keyword/phrase (boolean operators permitted)"
+                release_status="supported"/>
+        <filter name="signed" type="string" title="filter for subset of programmes that are signed"
+                release_status="supported">
+            <option value="exclusive" title="filter for programmes that are signed"
+                    href="/nitro/api/programmes?signed=exclusive&amp;availability=available&amp;availability_entity_type=episode&amp;descendants_of=b00ffbjg&amp;entity_type=episode&amp;media_set=pc&amp;media_type=audio_video&amp;page=1&amp;page_size=21&amp;sort=release_date&amp;sort_direction=descending"/>
+            <option value="inclusive" title="filter for programmes regardless of signedness"
+                    href="/nitro/api/programmes?signed=inclusive&amp;availability=available&amp;availability_entity_type=episode&amp;descendants_of=b00ffbjg&amp;entity_type=episode&amp;media_set=pc&amp;media_type=audio_video&amp;page=1&amp;page_size=21&amp;sort=release_date&amp;sort_direction=descending"/>
+            <option value="exclude" title="filter for programmes that are not signed"
+                    href="/nitro/api/programmes?signed=exclude&amp;availability=available&amp;availability_entity_type=episode&amp;descendants_of=b00ffbjg&amp;entity_type=episode&amp;media_set=pc&amp;media_type=audio_video&amp;page=1&amp;page_size=21&amp;sort=release_date&amp;sort_direction=descending"/>
+        </filter>
+        <filter name="tag_name" type="string" title="filter for subset of programmes with tag" release_status="beta"/>
+        <filter name="tag_scheme" type="string" title="filter for subset of programmes with a tag"
+                release_status="beta"/>
+        <filter name="tleo" type="boolean" title="filter for subset of programmes that are TLEOs"
+                release_status="supported">
+            <option value="true" title="filter for programmes that are TLEOs"
+                    href="/nitro/api/programmes?tleo=true&amp;availability=available&amp;availability_entity_type=episode&amp;descendants_of=b00ffbjg&amp;entity_type=episode&amp;media_set=pc&amp;media_type=audio_video&amp;page=1&amp;page_size=21&amp;sort=release_date&amp;sort_direction=descending"/>
+            <option value="false" title="filter for programmes that are not TLEOs"
+                    href="/nitro/api/programmes?tleo=false&amp;availability=available&amp;availability_entity_type=episode&amp;descendants_of=b00ffbjg&amp;entity_type=episode&amp;media_set=pc&amp;media_type=audio_video&amp;page=1&amp;page_size=21&amp;sort=release_date&amp;sort_direction=descending"/>
+        </filter>
+        <filter name="version" type="PID"
+                title="filter for subset of programmes with given PID as one of their versions" multiple_values="true"
+                release_status="supported"/>
+    </filters>
+    <mixins>
+        <mixin name="ancestor_titles" title="mixin to return ancestor programme titles" release_status="supported"
+               href="/nitro/api/programmes?mixin=ancestor_titles&amp;availability=available&amp;availability_entity_type=episode&amp;descendants_of=b00ffbjg&amp;entity_type=episode&amp;media_set=pc&amp;media_type=audio_video&amp;page=1&amp;page_size=21&amp;sort=release_date&amp;sort_direction=descending"/>
+        <mixin name="availability" title="mixin to return programme availability information" depends_on="availability"
+               release_status="beta"
+               href="/nitro/api/programmes?mixin=availability&amp;availability=available&amp;availability_entity_type=episode&amp;descendants_of=b00ffbjg&amp;entity_type=episode&amp;media_set=pc&amp;media_type=audio_video&amp;page=1&amp;page_size=21&amp;sort=release_date&amp;sort_direction=descending"/>
+        <mixin name="contributions" title="mixin to return information about contributors to a programme"
+               release_status="beta"
+               href="/nitro/api/programmes?mixin=contributions&amp;availability=available&amp;availability_entity_type=episode&amp;descendants_of=b00ffbjg&amp;entity_type=episode&amp;media_set=pc&amp;media_type=audio_video&amp;page=1&amp;page_size=21&amp;sort=release_date&amp;sort_direction=descending"/>
+        <mixin name="duration" title="mixin to return original version duration in programme concept entities"
+               release_status="supported"
+               href="/nitro/api/programmes?mixin=duration&amp;availability=available&amp;availability_entity_type=episode&amp;descendants_of=b00ffbjg&amp;entity_type=episode&amp;media_set=pc&amp;media_type=audio_video&amp;page=1&amp;page_size=21&amp;sort=release_date&amp;sort_direction=descending"/>
+        <mixin name="genre_groups" title="mixin to return list of genre groups" release_status="beta"
+               href="/nitro/api/programmes?mixin=genre_groups&amp;availability=available&amp;availability_entity_type=episode&amp;descendants_of=b00ffbjg&amp;entity_type=episode&amp;media_set=pc&amp;media_type=audio_video&amp;page=1&amp;page_size=21&amp;sort=release_date&amp;sort_direction=descending"/>
+        <mixin name="people" title="mixin to return information about contributors to a programme"
+               release_status="deprecated" deprecated="true" deprecated_since="2014-05-02" replaced_by="contributions"
+               href="/nitro/api/programmes?mixin=people&amp;availability=available&amp;availability_entity_type=episode&amp;descendants_of=b00ffbjg&amp;entity_type=episode&amp;media_set=pc&amp;media_type=audio_video&amp;page=1&amp;page_size=21&amp;sort=release_date&amp;sort_direction=descending"/>
+        <mixin name="previous_next"
+               title="mixin to return the programmes which appear before and after a programme (as determined by the sort applied in the request)"
+               release_status="alpha"
+               href="/nitro/api/programmes?mixin=previous_next&amp;availability=available&amp;availability_entity_type=episode&amp;descendants_of=b00ffbjg&amp;entity_type=episode&amp;media_set=pc&amp;media_type=audio_video&amp;page=1&amp;page_size=21&amp;sort=release_date&amp;sort_direction=descending"/>
+        <mixin name="related_links" title="mixin to return information about related links to a programme"
+               release_status="supported"
+               href="/nitro/api/programmes?mixin=related_links&amp;availability=available&amp;availability_entity_type=episode&amp;descendants_of=b00ffbjg&amp;entity_type=episode&amp;media_set=pc&amp;media_type=audio_video&amp;page=1&amp;page_size=21&amp;sort=release_date&amp;sort_direction=descending"/>
+        <mixin name="titles" title="mixin to return ancestor programme titles" release_status="deprecated"
+               deprecated="true" deprecated_since="2013-11-14" replaced_by="ancestor_titles"
+               href="/nitro/api/programmes?mixin=titles&amp;availability=available&amp;availability_entity_type=episode&amp;descendants_of=b00ffbjg&amp;entity_type=episode&amp;media_set=pc&amp;media_type=audio_video&amp;page=1&amp;page_size=21&amp;sort=release_date&amp;sort_direction=descending"/>
+    </mixins>
+</nitro>

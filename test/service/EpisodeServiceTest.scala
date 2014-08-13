@@ -1,0 +1,51 @@
+package service
+
+import controllers._
+import org.specs2.mock.Mockito
+import org.specs2.mutable.Specification
+
+import scala.concurrent.duration._
+import scala.concurrent.{Await, Future}
+import scala.io.Source._
+
+class EpisodeServiceTest extends Specification with Mockito {
+
+  val httpClient = mock[HttpClient]
+  httpClient.get(any[String]) returns Future.successful(Response(200, fromFile("test/resources/nitro_episodes.xml").mkString))
+  val service = new EpisodeService(httpClient)
+
+  "Episode Service" should {
+
+    "should parse and build episodes from client response" in {
+      val episodesFuture = service.episodes("pid")
+      val episode = Await.result(episodesFuture, 1000 milli)
+
+      episode.pid must equalTo("p00lfrb3")
+      episode.synopses must equalTo(Synopses("Short Synopsis", "Medium Synopsis", "Long Synopsis"))
+      episode.image must equalTo(Image("http://ichef.bbci.co.uk/images/ic/{recipe}/p01h7ms3.jpg", "image"))
+      episode.releaseDate must equalTo (Some("12 Nov 1972"))
+      episode.parentId must equalTo("b00ffbjg")
+    }
+
+    "should throw NotFoundException when status is 404" in {
+      httpClient.get(any[String]) returns Future.successful(Response(404, "not found"))
+
+      val episodesFuture: Future[Episode] = service.episodes("pid")
+      Await.result(episodesFuture, 100 milli) must throwA[NotFoundException]
+    }
+
+    "should throw NotFoundException when status is 404" in {
+      httpClient.get(any[String]) returns Future.successful(Response(404, "not found"))
+
+      val episodesFuture: Future[Episode] = service.episodes("pid")
+      Await.result(episodesFuture, 100 milli) must throwA[NotFoundException]
+    }
+
+    "should throw InternalServerException when any other status is returned" in {
+      httpClient.get(any[String]) returns Future.successful(Response(500, "not found"))
+
+      val episodesFuture: Future[Episode] = service.episodes("pid")
+      Await.result(episodesFuture, 100 milli) must throwA[InternalServerException]
+    }
+  }
+}
