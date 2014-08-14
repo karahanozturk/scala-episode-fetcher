@@ -1,3 +1,3 @@
 package controllers
 
-case class InternalServerException() extends Throwable
+case class InternalServerException(message: String) extends Throwable(message)

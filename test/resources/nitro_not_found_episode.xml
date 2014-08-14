@@ -1,0 +1,120 @@
+
+<?xml version="1.0" encoding="UTF-8"?><?xml-stylesheet type="text/xsl" href="/nitro/api/v1/nitro.xsl?uri=/nitro/api/"?><nitro xsi:schemaLocation="http://www.bbc.co.uk/nitro/ https://api.bbc.co.uk/nitro/api/schema" xmlns="http://www.bbc.co.uk/nitro/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+    <results page="1" page_size="10" total="0" more_than="0"/>
+    <filters>
+        <filter name="audio_described" type="boolean" title="filter for subset of programmes that are audio-described" release_status="supported">
+            <option value="true" title="filter for programmes that are audio-described" href="/nitro/api/programmes?audio_described=true&amp;mixin=ancestor_titles&amp;pid=b04dq9kl"/>
+            <option value="false" title="filter for programmes that are not audio-described" href="/nitro/api/programmes?audio_described=false&amp;mixin=ancestor_titles&amp;pid=b04dq9kl"/>
+        </filter>
+        <filter name="availability" type="string" title="filter for subset of programmes that have availability" multiple_values="true" release_status="supported">
+            <option value="available" title="filter for programmes that are available" release_status="supported" href="/nitro/api/programmes?availability=available&amp;mixin=ancestor_titles&amp;pid=b04dq9kl"/>
+            <option value="pending" title="filter for programmes that are expected to become available imminently" release_status="beta" href="/nitro/api/programmes?availability=pending&amp;mixin=ancestor_titles&amp;pid=b04dq9kl"/>
+        </filter>
+        <filter name="availability" type="daytime_duration" title="filter for programmes that will become available within given duration" multiple_values="true" release_status="beta"/>
+        <filter name="availability_entity_type" type="string" title="additional filter when availability=available" release_status="supported">
+            <option value="episode" title="filter for programmes with available episodes" href="/nitro/api/programmes?availability_entity_type=episode&amp;mixin=ancestor_titles&amp;pid=b04dq9kl"/>
+            <option value="clip" title="filter for programmes with available clips" href="/nitro/api/programmes?availability_entity_type=clip&amp;mixin=ancestor_titles&amp;pid=b04dq9kl"/>
+        </filter>
+        <filter name="availability_from" type="datetime" title="filter for subset of programmes that are available after or at the specified datetime" release_status="deprecated" deprecated="true" deprecated_since="2014-01-22"/>
+        <filter name="availability_to" type="datetime" title="filter for subset of programmes that are available before the specified datetime" release_status="deprecated" deprecated="true" deprecated_since="2014-01-22"/>
+        <filter name="children_of" type="PID" title="filter for subset of programmes that have PID as immediate parent" multiple_values="true" release_status="supported"/>
+        <filter name="descendants_of" type="PID" title="filter for subset of programmes that have PID as ancestor" multiple_values="true" release_status="supported"/>
+        <filter name="duration" type="string" title="filter for subset of programmes that have given duration" release_status="supported">
+            <option value="short" title="filter for programmes that have short duration (&lt; 5m)" href="/nitro/api/programmes?duration=short&amp;mixin=ancestor_titles&amp;pid=b04dq9kl"/>
+            <option value="medium" title="filter for programmes that have medium duration (5m - 30m)" href="/nitro/api/programmes?duration=medium&amp;mixin=ancestor_titles&amp;pid=b04dq9kl"/>
+            <option value="long" title="filter for programmes that have long duration (&gt; 30m)" href="/nitro/api/programmes?duration=long&amp;mixin=ancestor_titles&amp;pid=b04dq9kl"/>
+        </filter>
+        <filter name="entity_type" type="string" title="filter for subset of programmes that have given entity type" multiple_values="true" release_status="supported">
+            <option value="brand" title="filter for programmes that are brands" href="/nitro/api/programmes?entity_type=brand&amp;mixin=ancestor_titles&amp;pid=b04dq9kl"/>
+            <option value="series" title="filter for programmes that are series" href="/nitro/api/programmes?entity_type=series&amp;mixin=ancestor_titles&amp;pid=b04dq9kl"/>
+            <option value="episode" title="filter for programmes that are episodes" href="/nitro/api/programmes?entity_type=episode&amp;mixin=ancestor_titles&amp;pid=b04dq9kl"/>
+            <option value="clip" title="filter for programmes that are clips" href="/nitro/api/programmes?entity_type=clip&amp;mixin=ancestor_titles&amp;pid=b04dq9kl"/>
+        </filter>
+        <filter name="format" type="string" title="filter for subset of programmes with format" multiple_values="true" release_status="supported"/>
+        <filter name="genre" type="string" title="filter for subset of programmes with genre" multiple_values="true" release_status="supported"/>
+        <filter name="group" type="PID" title="filter for subset of programmes which belong to the given group pid" release_status="supported"/>
+        <filter name="initial_letter" type="character" title="filter for subset of programmes with title beginning with initial letter librarian style (ignoring leading 'The', 'An' (Welsh), etc) 0-9 a-z" release_status="supported"/>
+        <filter name="initial_letter_end" type="character" title="Programmes with (librarian) titles whose initial letter is equal/before given letter. Use with initial_letter_start for a range" release_status="supported"/>
+        <filter name="initial_letter_start" type="character" title="Programmes with (librarian) titles whose initial letter is equal/after given letter. Use with initial_letter_end for range." release_status="supported"/>
+        <filter name="initial_letter_stop" type="character" title="Programmes with (librarian) titles whose initial letter is equal/before given letter. Use with initial_letter_start for a range" release_status="deprecated" deprecated="true" deprecated_since="2014-01-22" replaced_by="initial_letter_end"/>
+        <filter name="initial_letter_strict" type="character" title="filter for subset of programmes with title beginning with initial letter" multiple_values="true" release_status="supported"/>
+        <filter name="item" type="PID" title="filter for subset of programmes with linked to versions which have the given item pids" multiple_values="true" release_status="supported"/>
+        <filter name="master_brand" type="string" title="filter for subset of programmes with master_brand" multiple_values="true" release_status="supported"/>
+        <filter name="media_set" type="string" title="filter for subset of programmes with media set" release_status="supported"/>
+        <filter name="media_type" type="string" title="filter for subset of programmes with media type" release_status="supported">
+            <option value="audio" title="filter for programmes that are audio only" href="/nitro/api/programmes?media_type=audio&amp;mixin=ancestor_titles&amp;pid=b04dq9kl"/>
+            <option value="audio_video" title="filter for programmes that are video only" href="/nitro/api/programmes?media_type=audio_video&amp;mixin=ancestor_titles&amp;pid=b04dq9kl"/>
+        </filter>
+        <filter name="page" type="integer" title="which page of results to return" min_value="1" default="1" release_status="supported"/>
+        <filter name="page_size" type="integer" title="number of results in each page" min_value="0" max_value="300" default="10" release_status="supported"/>
+        <filter name="partner_id" type="PID" title="filter for programmes by partner ID" release_status="beta" multiple_values="true" prefer="partner_pid"/>
+        <filter name="partner_pid" type="PID" title="filter for programmes by partner PID" release_status="beta" multiple_values="true" default="s0000001"/>
+        <filter name="people" type="PID" title="filter for subset of programmes with contributions by given people PID" release_status="supported"/>
+        <filter name="pid" type="PID" title="filter for subset of programmes having given PID" multiple_values="true" release_status="supported"/>
+        <filter name="promoted_for" type="string" title="filter for subset of programmes which are promoted for given service" release_status="beta"/>
+        <filter name="q" type="string" title="filter for subset of programmes matching supplied keyword/phrase (boolean operators permitted)" release_status="supported"/>
+        <filter name="signed" type="string" title="filter for subset of programmes that are signed" release_status="supported">
+            <option value="exclusive" title="filter for programmes that are signed" href="/nitro/api/programmes?signed=exclusive&amp;mixin=ancestor_titles&amp;pid=b04dq9kl"/>
+            <option value="inclusive" title="filter for programmes regardless of signedness" href="/nitro/api/programmes?signed=inclusive&amp;mixin=ancestor_titles&amp;pid=b04dq9kl"/>
+            <option value="exclude" title="filter for programmes that are not signed" href="/nitro/api/programmes?signed=exclude&amp;mixin=ancestor_titles&amp;pid=b04dq9kl"/>
+        </filter>
+        <filter name="tag_name" type="string" title="filter for subset of programmes with tag" release_status="beta"/>
+        <filter name="tag_scheme" type="string" title="filter for subset of programmes with a tag" release_status="beta"/>
+        <filter name="tleo" type="boolean" title="filter for subset of programmes that are TLEOs" release_status="supported">
+            <option value="true" title="filter for programmes that are TLEOs" href="/nitro/api/programmes?tleo=true&amp;mixin=ancestor_titles&amp;pid=b04dq9kl"/>
+            <option value="false" title="filter for programmes that are not TLEOs" href="/nitro/api/programmes?tleo=false&amp;mixin=ancestor_titles&amp;pid=b04dq9kl"/>
+        </filter>
+        <filter name="version" type="PID" title="filter for subset of programmes with given PID as one of their versions" multiple_values="true" release_status="supported"/>
+    </filters>
+    <sorts>
+        <sort name="group_position" is_default="false" title="sort numerically by position in group, ascending" release_status="beta">
+            <sort_direction name="sort_direction" value="ascending" is_default="true" href="/nitro/api/programmes?sort=group_position&amp;sort_direction=ascending&amp;mixin=ancestor_titles&amp;pid=b04dq9kl"/>
+        </sort>
+        <sort name="most_popular" is_default="false" title="sort numerically by popularity (most popular first)" release_status="deprecated" deprecated="true" deprecated_since="2013-11-11" replaced_by="views">
+            <sort_direction name="sort_direction" value="ascending" is_default="false" href="/nitro/api/programmes?sort=most_popular&amp;sort_direction=ascending&amp;mixin=ancestor_titles&amp;pid=b04dq9kl"/>
+            <sort_direction name="sort_direction" value="descending" is_default="true" href="/nitro/api/programmes?sort=most_popular&amp;sort_direction=descending&amp;mixin=ancestor_titles&amp;pid=b04dq9kl"/>
+        </sort>
+        <sort name="pid" is_default="true" title="sort alphabetically by PID, descending" release_status="supported">
+            <sort_direction name="sort_direction" value="ascending" is_default="false" href="/nitro/api/programmes?sort=pid&amp;sort_direction=ascending&amp;mixin=ancestor_titles&amp;pid=b04dq9kl"/>
+            <sort_direction name="sort_direction" value="descending" is_default="true" href="/nitro/api/programmes?sort=pid&amp;sort_direction=descending&amp;mixin=ancestor_titles&amp;pid=b04dq9kl"/>
+        </sort>
+        <sort name="position" is_default="false" title="sort numerically by position, ascending" release_status="supported">
+            <sort_direction name="sort_direction" value="ascending" is_default="true" href="/nitro/api/programmes?sort=position&amp;sort_direction=ascending&amp;mixin=ancestor_titles&amp;pid=b04dq9kl"/>
+            <sort_direction name="sort_direction" value="descending" is_default="false" href="/nitro/api/programmes?sort=position&amp;sort_direction=descending&amp;mixin=ancestor_titles&amp;pid=b04dq9kl"/>
+        </sort>
+        <sort name="release_date" is_default="false" title="sort chronologically by release date, descending" release_status="supported">
+            <sort_direction name="sort_direction" value="ascending" is_default="false" href="/nitro/api/programmes?sort=release_date&amp;sort_direction=ascending&amp;mixin=ancestor_titles&amp;pid=b04dq9kl"/>
+            <sort_direction name="sort_direction" value="descending" is_default="true" href="/nitro/api/programmes?sort=release_date&amp;sort_direction=descending&amp;mixin=ancestor_titles&amp;pid=b04dq9kl"/>
+        </sort>
+        <sort name="relevance" is_default="false" title="sort by weighting of search term (use with q parameter)" release_status="supported"/>
+        <sort name="scheduled_start" is_default="false" title="sort chronologically by scheduled start time/date, ascending" release_status="supported">
+            <sort_direction name="sort_direction" value="ascending" is_default="true" href="/nitro/api/programmes?sort=scheduled_start&amp;sort_direction=ascending&amp;mixin=ancestor_titles&amp;pid=b04dq9kl"/>
+            <sort_direction name="sort_direction" value="descending" is_default="false" href="/nitro/api/programmes?sort=scheduled_start&amp;sort_direction=descending&amp;mixin=ancestor_titles&amp;pid=b04dq9kl"/>
+        </sort>
+        <sort name="strict_title" is_default="false" title="sort alphabetically by title, ascending" release_status="supported">
+            <sort_direction name="sort_direction" value="ascending" is_default="true" href="/nitro/api/programmes?sort=strict_title&amp;sort_direction=ascending&amp;mixin=ancestor_titles&amp;pid=b04dq9kl"/>
+            <sort_direction name="sort_direction" value="descending" is_default="false" href="/nitro/api/programmes?sort=strict_title&amp;sort_direction=descending&amp;mixin=ancestor_titles&amp;pid=b04dq9kl"/>
+        </sort>
+        <sort name="title" is_default="false" title="sort by title librarian style (ignoring leading 'The', 'A', etc), ascending" release_status="supported">
+            <sort_direction name="sort_direction" value="ascending" is_default="true" href="/nitro/api/programmes?sort=title&amp;sort_direction=ascending&amp;mixin=ancestor_titles&amp;pid=b04dq9kl"/>
+            <sort_direction name="sort_direction" value="descending" is_default="false" href="/nitro/api/programmes?sort=title&amp;sort_direction=descending&amp;mixin=ancestor_titles&amp;pid=b04dq9kl"/>
+        </sort>
+        <sort name="tree" is_default="false" title="sort by root pid and then preorder tree sort. Requires entities to have release date." release_status="supported">
+            <sort_direction name="sort_direction" value="ascending" is_default="false" href="/nitro/api/programmes?sort=tree&amp;sort_direction=ascending&amp;mixin=ancestor_titles&amp;pid=b04dq9kl"/>
+            <sort_direction name="sort_direction" value="descending" is_default="true" href="/nitro/api/programmes?sort=tree&amp;sort_direction=descending&amp;mixin=ancestor_titles&amp;pid=b04dq9kl"/>
+        </sort>
+        <sort name="views" is_default="false" title="sort numerically by number of views (most popular first - faster most_popular)" release_status="supported">
+            <sort_direction name="sort_direction" value="ascending" is_default="false" href="/nitro/api/programmes?sort=views&amp;sort_direction=ascending&amp;mixin=ancestor_titles&amp;pid=b04dq9kl"/>
+            <sort_direction name="sort_direction" value="descending" is_default="true" href="/nitro/api/programmes?sort=views&amp;sort_direction=descending&amp;mixin=ancestor_titles&amp;pid=b04dq9kl"/>
+        </sort>
+    </sorts>
+    <mixins>
+        <mixin name="contributions" title="mixin to return information about contributors to a programme" release_status="beta" href="/nitro/api/programmes?mixin=contributions&amp;mixin=ancestor_titles&amp;pid=b04dq9kl"/>
+        <mixin name="duration" title="mixin to return original version duration in programme concept entities" release_status="supported" href="/nitro/api/programmes?mixin=duration&amp;mixin=ancestor_titles&amp;pid=b04dq9kl"/>
+        <mixin name="genre_groups" title="mixin to return list of genre groups" release_status="beta" href="/nitro/api/programmes?mixin=genre_groups&amp;mixin=ancestor_titles&amp;pid=b04dq9kl"/>
+        <mixin name="people" title="mixin to return information about contributors to a programme" release_status="deprecated" deprecated="true" deprecated_since="2014-05-02" replaced_by="contributions" href="/nitro/api/programmes?mixin=people&amp;mixin=ancestor_titles&amp;pid=b04dq9kl"/>
+        <mixin name="previous_next" title="mixin to return the programmes which appear before and after a programme (as determined by the sort applied in the request)" release_status="alpha" href="/nitro/api/programmes?mixin=previous_next&amp;mixin=ancestor_titles&amp;pid=b04dq9kl"/>
+        <mixin name="related_links" title="mixin to return information about related links to a programme" release_status="supported" href="/nitro/api/programmes?mixin=related_links&amp;mixin=ancestor_titles&amp;pid=b04dq9kl"/>
+        <mixin name="titles" title="mixin to return ancestor programme titles" release_status="deprecated" deprecated="true" deprecated_since="2013-11-14" replaced_by="ancestor_titles" href="/nitro/api/programmes?mixin=titles&amp;mixin=ancestor_titles&amp;pid=b04dq9kl"/>
+    </mixins>
+</nitro>

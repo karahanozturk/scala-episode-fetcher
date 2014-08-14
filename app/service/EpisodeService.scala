@@ -18,7 +18,7 @@ class EpisodeService @Inject()(httpClient: HttpClient, config: Configuration) {
     httpClient get (baseUrl + "/programmes?pid=" + pid) map {
       case Response(200, body) => parseEpisode(body)
       case Response(404, _) => throw NotFoundException(s"Could not find episode with pid $pid")
-      case Response(status, _) => throw InternalServerException()
+      case Response(status, _) => throw InternalServerException(s"Nitro request failed with status code $status")
     }
   }
 

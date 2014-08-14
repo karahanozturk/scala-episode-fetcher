@@ -37,13 +37,21 @@ class IntegrationSpec extends Specification {
         (json \ "synopses").extract[Synopses] mustEqual Synopses("Short Synopsis", "Medium Synopsis", "Long Synopsis")
         (json \ "image").extract[Image] mustEqual Image("http://ichef.bbci.co.uk/images/ic/{recipe}/p01h7ms3.jpg", "image")
         (json \ "parent_id").extract[String] mustEqual "b00ffbjg"
+        (json \ "release_date").extract[String] mustEqual "12 Nov 1972"
       }
     }
 
-//    "given an episode doesn't exist in Nitro" in {
-//      "returns a not found response" in {
-//
-//      }
-//    }
+    "given an episode doesn't exist in Nitro" in {
+      MockServer.reset()
+      stubFor(get(urlEqualTo("/programmes?pid=p00lfrb3")).
+        willReturn(aResponse().
+        withStatus(200).
+        withBody(XML.loadFile("test/resources/nitro_not_found_episode.xml").toString())))
+
+      "returns a not found response" in new WithServer(app) {
+        val result = Await.result(httpClient.get(s"http://localhost:$port/episodes?pid=p00lfrb3"), 1000 milli)
+        result.status mustEqual 404
+      }
+    }
   }
 }

@@ -19,7 +19,7 @@ class EpisodeController @Inject()(service: EpisodeService) extends Controller {
 
 object JsonUtils {
   val episodeSerializer = FieldSerializer[Episode](
-    renameTo("parentId", "parent_id"),
-    renameFrom("parent_id", "parentId")
+    renameTo("parentId", "parent_id") orElse renameTo("releaseDate", "release_date"),
+    renameFrom("parent_id", "parentId") orElse renameFrom("release_date", "releaseDate")
   )
 }
