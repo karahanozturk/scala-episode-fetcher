@@ -17,7 +17,7 @@ class EpisodeControllerTest extends Specification with Mockito {
   implicit val formats = DefaultFormats + JsonUtils.episodeSerializer
 
   val expectedEpisode = Episode("pid", Synopses("Small", "Medium", "Large"), Image("url", "image"), "parent_pid")
-  val episodeFuture = Future.successful(expectedEpisode)
+  val episodeFuture = Future.successful(Some(expectedEpisode))
   val service = mock[EpisodeService]
   service.episodes("pid") returns episodeFuture
 
@@ -25,11 +25,18 @@ class EpisodeControllerTest extends Specification with Mockito {
 
   "Episode Controller" should {
 
-    "retrieve episodes" in {
+    "returns Successful with episode response when episode is found" in {
       val result = controller.episodes("pid")(FakeRequest(GET, "/episodes"))
       status(result) must equalTo(OK)
       val actualEpisode = parse(contentAsString(result)).extract[Episode]
       actualEpisode must equalTo(expectedEpisode)
+    }
+
+    "returns Not Found response when episode does not exist" in {
+      service.episodes("pid") returns  Future.successful(None)
+
+      val result = controller.episodes("pid")(FakeRequest(GET, "/episodes"))
+      status(result) must equalTo(NOT_FOUND)
     }
   }
 }

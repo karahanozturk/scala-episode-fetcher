@@ -14,7 +14,8 @@ class EpisodeServiceTest extends Specification with Mockito {
   val httpClient = mock[HttpClient]
 
   config.getString("nitro.url") returns Some("http://some.url.com")
-  httpClient.get("http://some.url.com/programmes?pid=pid") returns Future.successful(Response(200, XML.loadFile("test/resources/nitro_episodes.xml").toString()))
+  httpClient.get("http://some.url.com/programmes?pid=pid") returns Future.successful(
+    Response(200, XML.loadFile("test/resources/nitro_episodes.xml").toString()))
 
   val service = new EpisodeService(httpClient, config)
 
@@ -22,7 +23,7 @@ class EpisodeServiceTest extends Specification with Mockito {
 
     "should parse and build episodes from client response" in {
       val episodesFuture = service.episodes("pid")
-      val episode = Await.result(episodesFuture, 1000 milli)
+      val episode = Await.result(episodesFuture, 1000 milli).get
 
       episode.pid must equalTo("p00lfrb3")
       episode.synopses must equalTo(Synopses("Short Synopsis", "Medium Synopsis", "Long Synopsis"))
@@ -31,24 +32,18 @@ class EpisodeServiceTest extends Specification with Mockito {
       episode.parentId must equalTo("b00ffbjg")
     }
 
-    "should throw NotFoundException when status is 404" in {
-      httpClient.get(any[String]) returns Future.successful(Response(404, "not found"))
+    "should return None when response does not have an episode" in {
+      httpClient.get(any[String]) returns Future.successful(
+        Response(200, XML.loadFile("test/resources/nitro_not_found_episode.xml").toString()))
 
-      val episodesFuture: Future[Episode] = service.episodes("pid")
-      Await.result(episodesFuture, 100 milli) must throwA[NotFoundException]
-    }
-
-    "should throw NotFoundException when status is 404" in {
-      httpClient.get(any[String]) returns Future.successful(Response(404, "not found"))
-
-      val episodesFuture: Future[Episode] = service.episodes("pid")
-      Await.result(episodesFuture, 100 milli) must throwA[NotFoundException]
+      val episodesFuture: Future[Option[Episode]] = service.episodes("pid")
+      Await.result(episodesFuture, 100 milli) must equalTo(None)
     }
 
     "should throw InternalServerException when any other status is returned" in {
       httpClient.get(any[String]) returns Future.successful(Response(500, "not found"))
 
-      val episodesFuture: Future[Episode] = service.episodes("pid")
+      val episodesFuture: Future[Option[Episode]] = service.episodes("pid")
       Await.result(episodesFuture, 100 milli) must throwA[InternalServerException]
     }
   }

@@ -13,7 +13,10 @@ class EpisodeController @Inject()(service: EpisodeService) extends Controller {
   implicit val formats = DefaultFormats + JsonUtils.episodeSerializer
   
   def episodes(pid: String) = Action.async {
-    service.episodes(pid) map { episode => Ok(write(episode)) }
+    service.episodes(pid) map {
+      case None => NotFound
+      case episode => Ok(write(episode))
+    }
   }
 }
 

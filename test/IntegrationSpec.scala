@@ -22,13 +22,14 @@ class IntegrationSpec extends Specification {
 
   "Episode Fetcher" should {
     "given an episode exists in Nitro" in {
-      MockServer.reset()
-      stubFor(get(urlEqualTo("/programmes?pid=p00lfrb3")).
-        willReturn(aResponse().
-        withStatus(200).
-        withBody(XML.loadFile("test/resources/nitro_episodes.xml").toString())))
 
       "returns the iBL episode" in new WithServer(app) {
+        MockServer.reset()
+        stubFor(get(urlEqualTo("/programmes?pid=p00lfrb3")).
+          willReturn(aResponse().
+          withStatus(200).
+          withBody(XML.loadFile("test/resources/nitro_episodes.xml").toString())))
+
         val result = Await.result(httpClient.get(s"http://localhost:$port/episodes?pid=p00lfrb3"), 1000 milli)
         result.status mustEqual 200
         val json = parse(result.body)
@@ -42,14 +43,14 @@ class IntegrationSpec extends Specification {
     }
 
     "given an episode doesn't exist in Nitro" in {
-      MockServer.reset()
-      stubFor(get(urlEqualTo("/programmes?pid=p00lfrb3")).
-        willReturn(aResponse().
-        withStatus(200).
-        withBody(XML.loadFile("test/resources/nitro_not_found_episode.xml").toString())))
 
       "returns a not found response" in new WithServer(app) {
-        val result = Await.result(httpClient.get(s"http://localhost:$port/episodes?pid=p00lfrb3"), 1000 milli)
+        MockServer.reset()
+        stubFor(get(urlEqualTo("/programmes?pid=p00lfrb2")).
+          willReturn(aResponse().
+          withStatus(200).
+          withBody(XML.loadFile("test/resources/nitro_not_found_episode.xml").toString())))
+        val result = Await.result(httpClient.get(s"http://localhost:$port/episodes?pid=p00lfrb2"), 1000 milli)
         result.status mustEqual 404
       }
     }
