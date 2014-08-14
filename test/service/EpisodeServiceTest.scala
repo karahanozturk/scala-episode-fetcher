@@ -1,18 +1,22 @@
 package service
 
+import config.Configuration
 import controllers._
 import org.specs2.mock.Mockito
 import org.specs2.mutable.Specification
 
 import scala.concurrent.duration._
 import scala.concurrent.{Await, Future}
-import scala.io.Source._
+import scala.xml.XML
 
 class EpisodeServiceTest extends Specification with Mockito {
-
+  val config = mock[Configuration]
   val httpClient = mock[HttpClient]
-  httpClient.get(any[String]) returns Future.successful(Response(200, fromFile("test/resources/nitro_episodes.xml").mkString))
-  val service = new EpisodeService(httpClient)
+
+  config.getString("nitro.url") returns Some("http://some.url.com")
+  httpClient.get("http://some.url.com/programmes?pid=pid") returns Future.successful(Response(200, XML.loadFile("test/resources/nitro_episodes.xml").toString()))
+
+  val service = new EpisodeService(httpClient, config)
 
   "Episode Service" should {
 

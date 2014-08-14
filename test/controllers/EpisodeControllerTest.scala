@@ -14,13 +14,10 @@ import scala.concurrent.Future
 
 @RunWith(classOf[JUnitRunner])
 class EpisodeControllerTest extends Specification with Mockito {
-
-  implicit val formats = DefaultFormats
+  implicit val formats = DefaultFormats + JsonUtils.episodeSerializer
 
   val expectedEpisode = Episode("pid", Synopses("Small", "Medium", "Large"), Image("url", "image"), "parent_pid")
-  val episodeFuture = Future {
-    expectedEpisode
-  }
+  val episodeFuture = Future.successful(expectedEpisode)
   val service = mock[EpisodeService]
   service.episodes("pid") returns episodeFuture
 
@@ -30,7 +27,6 @@ class EpisodeControllerTest extends Specification with Mockito {
 
     "retrieve episodes" in {
       val result = controller.episodes("pid")(FakeRequest(GET, "/episodes"))
-
       status(result) must equalTo(OK)
       val actualEpisode = parse(contentAsString(result)).extract[Episode]
       actualEpisode must equalTo(expectedEpisode)
