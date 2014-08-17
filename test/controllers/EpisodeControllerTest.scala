@@ -6,9 +6,9 @@ import org.specs2.mutable.Specification
 import org.specs2.runner.JUnitRunner
 import play.api.test.FakeRequest
 import play.api.test.Helpers._
-import service.EpisodeService
 import org.json4s._
 import org.json4s.jackson.JsonMethods._
+import prefetcher.{Synopses, Episode, Image, EpisodeFetcher}
 
 import scala.concurrent.Future
 
@@ -18,21 +18,21 @@ class EpisodeControllerTest extends Specification with Mockito {
 
   val expectedEpisode = Episode("pid", Synopses("Small", "Medium", "Large"), Image("url", "image"), "parent_pid")
   val episodeFuture = Future.successful(Some(expectedEpisode))
-  val service = mock[EpisodeService]
+  val service = mock[EpisodeFetcher]
   service.episodes("pid") returns episodeFuture
 
   val controller = new EpisodeController(service)
 
   "Episode Controller" should {
 
-    "returns Successful with episode response when episode is found" in {
+    "return Successful with episode response when episode is found" in {
       val result = controller.episodes("pid")(FakeRequest(GET, "/episodes"))
       status(result) must equalTo(OK)
       val actualEpisode = parse(contentAsString(result)).extract[Episode]
       actualEpisode must equalTo(expectedEpisode)
     }
 
-    "returns Not Found response when episode does not exist" in {
+    "return Not Found response when episode does not exist" in {
       service.episodes("pid") returns  Future.successful(None)
 
       val result = controller.episodes("pid")(FakeRequest(GET, "/episodes"))

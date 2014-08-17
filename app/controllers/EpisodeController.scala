@@ -6,10 +6,10 @@ import org.json4s._
 import org.json4s.FieldSerializer._
 import org.json4s.jackson.Serialization.write
 import play.api.mvc._
-import service.EpisodeService
+import prefetcher.{Episode, EpisodeFetcher}
 import scala.concurrent.ExecutionContext.Implicits.global
 
-class EpisodeController @Inject()(service: EpisodeService) extends Controller {
+class EpisodeController @Inject()(service: EpisodeFetcher) extends Controller {
   implicit val formats = DefaultFormats + JsonUtils.episodeSerializer
   
   def episodes(pid: String) = Action.async {

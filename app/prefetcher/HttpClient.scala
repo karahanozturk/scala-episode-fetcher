@@ -1,8 +1,9 @@
-package controllers
+package prefetcher
+
+import dispatch.{Http, url}
+import play.api.libs.concurrent.Execution.Implicits._
 
 import scala.concurrent.Future
-import dispatch._
-import play.api.libs.concurrent.Execution.Implicits._
 
 case class Response(status: Int, body: String)
 
