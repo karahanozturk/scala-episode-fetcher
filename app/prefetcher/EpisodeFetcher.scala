@@ -19,7 +19,8 @@ class EpisodeFetcher @Inject()(httpClient: HttpClient, config: Configuration) {
 
   def episodes(pid: String): Future[Option[Episode]] = {
     httpClient get (baseUrl + "/programmes?pid=" + pid) map {
-      case Response(200, body) => val bodyXml = XML.loadString(body)
+      case Response(200, body) =>
+        val bodyXml = XML.loadString(body)
         (bodyXml \\ "@total").text match {
           case "0" => None
           case _ => Some(parseEpisode(bodyXml))
@@ -29,14 +30,14 @@ class EpisodeFetcher @Inject()(httpClient: HttpClient, config: Configuration) {
   }
 
   implicit def generateTitle(n: NitroTitles) = n match {
-    case NitroTitles(episode, Some(brand), None, None, _) => IblTitles(brand, Some(episode))
-    case NitroTitles(episode, Some(brand), _, Some(subSeries), _) => IblTitles(brand, Some(subSeries + n.episodeWithPrefix))
-    case NitroTitles(episode, Some(brand), Some(series), None, _) => IblTitles(brand, Some(series + n.episodeWithPrefix))
-    case NitroTitles(episode, None, Some(series), Some(subSeries), _) => IblTitles(series, Some(subSeries + n.episodeWithPrefix))
-    case NitroTitles(episode, None, Some(series), None, Some(position)) => IblTitles(series, Some(s"$position. $episode"))
-    case NitroTitles(episode, None, Some(series), None, None) => IblTitles(series, Some(episode))
-    case NitroTitles(episode, None, None, Some(subSeries), _) => IblTitles(subSeries, Some(episode))
-    case NitroTitles(episode, None, None, None, None) => IblTitles(episode, None)
+    case NitroTitles(episode, Some(brand), None, None, _) => Titles(brand, Some(episode))
+    case NitroTitles(episode, Some(brand), _, Some(subSeries), _) => Titles(brand, Some(subSeries + n.episodeWithPrefix))
+    case NitroTitles(episode, Some(brand), Some(series), None, _) => Titles(brand, Some(series + n.episodeWithPrefix))
+    case NitroTitles(episode, None, Some(series), Some(subSeries), _) => Titles(series, Some(subSeries + n.episodeWithPrefix))
+    case NitroTitles(episode, None, Some(series), None, Some(position)) => Titles(series, Some(s"$position. $episode"))
+    case NitroTitles(episode, None, Some(series), None, None) => Titles(series, Some(episode))
+    case NitroTitles(episode, None, None, Some(subSeries), _) => Titles(subSeries, Some(episode))
+    case NitroTitles(episode, None, None, None, None) => Titles(episode, None)
   }
 
   def extractTitles(nitroEpisode: NodeSeq) = {
@@ -46,7 +47,6 @@ class EpisodeFetcher @Inject()(httpClient: HttpClient, config: Configuration) {
     val seriesTitle = seriesTitles.headOption.map(_.text.trim)
     val subseriesTitle = seriesTitles.drop(1).headOption.map(_.text)
     val position = (nitroEpisode \ "episode_of" \ "@position").headOption.map(_.text.toInt)
-
     NitroTitles(episodeTitle text, firstOfBrands, seriesTitle, subseriesTitle, position)
   }
 
@@ -57,7 +57,6 @@ class EpisodeFetcher @Inject()(httpClient: HttpClient, config: Configuration) {
       val dateTime = DateTime.parse(node.text, DateTimeFormat.forPattern("yyy-MM-ddZ"))
       dateTime.toString(DateTimeFormat.forPattern("dd MMM yyyy"))
     }
-
     val title = extractTitles(bodyXml \\ "results" \ "episode")
 
     Episode(
@@ -78,5 +77,3 @@ case class NitroTitles(episode: String, brand: Option[String], series: Option[St
     case None => s": $episode"
   }
 }
-
-case class IblTitles(title: String, subtitle: Option[String])

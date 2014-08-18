@@ -12,8 +12,6 @@ val cucumberSettings = CucumberPlugin.cucumberSettings ++
     CucumberPlugin.cucumberFeaturesLocation := "./test/features",
     CucumberPlugin.cucumberStepsBasePackage := "features.steps")
 
-//lazy val root = (project in file(".")).enablePlugins(PlayScala)
-
 lazy val root = Project ("episode-fetcher", file ("."), settings = Defaults.coreDefaultSettings ++ cucumberSettings)
   .enablePlugins(PlayScala)
 
