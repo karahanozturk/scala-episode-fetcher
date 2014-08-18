@@ -21,7 +21,7 @@ class EpisodeFetcherTest extends Specification with Mockito {
   "Episode Service" should {
 
     "parse and build episodes from client response" in {
-      val episodesFuture = fetcher.episodes("pid")
+      val episodesFuture = fetcher.fetch("pid")
       val episode = Await.result(episodesFuture, 1000 milli).get
 
       episode.pid must equalTo("p00lfrb3")
@@ -35,14 +35,14 @@ class EpisodeFetcherTest extends Specification with Mockito {
       httpClient.get(any[String]) returns Future.successful(
         Response(200, XML.loadFile("test/resources/nitro_not_found_episode.xml").toString()))
 
-      val episodesFuture: Future[Option[Episode]] = fetcher.episodes("pid")
+      val episodesFuture: Future[Option[Episode]] = fetcher.fetch("pid")
       Await.result(episodesFuture, 100 milli) must equalTo(None)
     }
 
     "throw InternalServerException when any other status is returned" in {
       httpClient.get(any[String]) returns Future.successful(Response(500, "not found"))
 
-      val episodesFuture: Future[Option[Episode]] = fetcher.episodes("pid")
+      val episodesFuture: Future[Option[Episode]] = fetcher.fetch("pid")
       Await.result(episodesFuture, 100 milli) must throwA[InternalServerException]
     }
   }

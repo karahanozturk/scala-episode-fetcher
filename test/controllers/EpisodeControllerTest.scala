@@ -19,7 +19,7 @@ class EpisodeControllerTest extends Specification with Mockito {
   val expectedEpisode = Episode("pid", Synopses("Small", "Medium", "Large"), Image("url", "image"), "parent_pid", None, "title", None)
   val episodeFuture = Future.successful(Some(expectedEpisode))
   val service = mock[EpisodeFetcher]
-  service.episodes("pid") returns episodeFuture
+  service.fetch("pid") returns episodeFuture
 
   val controller = new EpisodeController(service)
 
@@ -33,7 +33,7 @@ class EpisodeControllerTest extends Specification with Mockito {
     }
 
     "return Not Found response when episode does not exist" in {
-      service.episodes("pid") returns Future.successful(None)
+      service.fetch("pid") returns Future.successful(None)
       val result = controller.episodes("pid")(FakeRequest(GET, "/episodes"))
       status(result) must equalTo(NOT_FOUND)
     }

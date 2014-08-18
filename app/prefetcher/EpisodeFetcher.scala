@@ -17,7 +17,7 @@ case class NotFoundException(message: String) extends Throwable
 class EpisodeFetcher @Inject()(httpClient: HttpClient, config: Configuration) {
   val baseUrl = config.getString("nitro.url").get
 
-  def episodes(pid: String): Future[Option[Episode]] = {
+  def fetch(pid: String): Future[Option[Episode]] = {
     httpClient get (baseUrl + "/programmes?pid=" + pid) map {
       case Response(200, body) =>
         val bodyXml = XML.loadString(body)

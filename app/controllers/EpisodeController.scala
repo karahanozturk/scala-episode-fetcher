@@ -10,13 +10,13 @@ import prefetcher.{Episode, EpisodeFetcher}
 
 import scala.concurrent.ExecutionContext.Implicits.global
 
-class EpisodeController @Inject()(service: EpisodeFetcher) extends Controller {
+class EpisodeController @Inject()(fetcher: EpisodeFetcher) extends Controller {
   implicit val formats = DefaultFormats + JsonUtils.episodeSerializer
 
   def episodes(pid: String) = Action.async {
-    service.episodes(pid) map {
-      case None => NotFound
+    fetcher.fetch(pid) map {
       case episode => Ok(write(episode))
+      case None => NotFound
     }
   }
 }
