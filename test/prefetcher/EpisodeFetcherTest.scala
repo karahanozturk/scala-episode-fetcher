@@ -6,7 +6,7 @@ import org.specs2.mutable.Specification
 
 import scala.concurrent.duration._
 import scala.concurrent.{Await, Future}
-import scala.xml.XML
+import scala.xml.{NodeSeq, XML}
 
 class EpisodeFetcherTest extends Specification with Mockito {
   val config = mock[Configuration]
@@ -129,5 +129,80 @@ class EpisodeFetcherTest extends Specification with Mockito {
     val titles = fetcher.generateTitle(nitroTitles)
     "have the series title as the title" in {titles.title  must equalTo("Series") }
     "and the subseries, position and episode as the subtitle" in {titles.subtitle.get must equalTo("Subseries: 3. Episode") }
+  }
+
+
+  "Extraxting titles" should {
+    "extract title as episode title when presentation title is missing" in {
+      val nitroEpisodeXml = <episode> <title>title</title> </episode>
+      fetcher.extractTitles(nitroEpisodeXml).episode must equalTo("title")
+    }
+
+    "extract presentation title as episode title when presentation title exists" in {
+      val nitroEpisodeXml = <episode> <presentation_title>presentation title</presentation_title> </episode>
+      fetcher.extractTitles(nitroEpisodeXml).episode must equalTo("presentation title")
+    }
+
+    "extract title as episode title when title and presentation title both exist" in {
+      val nitroEpisodeXml =
+        <episode>
+          <title>title</title>
+          <presentation_title>presentation title</presentation_title>
+      </episode>
+      fetcher.extractTitles(nitroEpisodeXml).episode must equalTo("title")
+    }
+
+    "extract episode_of.postion as position whenepisode_of.postion exists" in {
+      val nitroEpisodeXml = <episode> <episode_of position="3"/> </episode>
+      fetcher.extractTitles(nitroEpisodeXml).position.get must equalTo(3)
+    }
+
+    "have the first brand ancestor title as the brand title when multiple brand ancestors exist" in {
+      val nitroEpisodeXml =
+        <episode>
+        <ancestors_titles>
+          <brand>
+            <title>Brand 1</title>
+          </brand>
+          <brand>
+            <title>Brand 2</title>
+          </brand>
+        </ancestors_titles>
+        </episode>
+      fetcher.extractTitles(nitroEpisodeXml).brand.get must equalTo("Brand 1")
+    }
+
+    "have the series ancestor title as the series title when only 1 series ancestor exists" in {
+      val nitroEpisodeXml =
+        <episode>
+        <ancestors_titles>
+          <series>
+            <title>Series</title>
+          </series>
+        </ancestors_titles>
+        </episode>
+      fetcher.extractTitles(nitroEpisodeXml).series.get must equalTo("Series")
+    }
+
+    "have the second last series title from ancestors as the series title\n" +
+      "and the last series title from ancestors as the subseries title " +
+      "when multiple series ancestors exist" in {
+      val nitroEpisodeXml =
+        <episode>
+        <ancestors_titles>
+          <series>
+            <title>Series 1</title>
+          </series>
+          <series>
+            <title>Series 2</title>
+          </series>
+          <series>
+            <title>Series 3</title>
+          </series>
+        </ancestors_titles>
+        </episode>
+      fetcher.extractTitles(nitroEpisodeXml).series.get must equalTo("Series 2")
+      fetcher.extractTitles(nitroEpisodeXml).subSeries.get must equalTo("Series 3")
+    }
   }
 }

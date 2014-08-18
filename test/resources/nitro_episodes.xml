@@ -26,6 +26,16 @@
                      href_deprecated="true"/>
             <ancestors result_type="mixed" href="/nitro/api/v1/episodes/p00lfrb3/ancestors/"/>
             <items_for result_type="item" href="/nitro/api/items?programme=p00lfrb3"/>
+            <ancestors_titles>
+                <brand>
+                    <pid>p01zcvp7</pid>
+                    <title>D-Day 70</title>
+                </brand>
+                <series>
+                    <pid>p01zcw4y</pid>
+                    <title>The Heroes Return</title>
+                </series>
+            </ancestors_titles>
         </episode>
     </results>
     <filters>
