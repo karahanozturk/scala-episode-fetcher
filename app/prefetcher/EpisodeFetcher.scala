@@ -41,14 +41,14 @@ class EpisodeFetcher @Inject()(httpClient: HttpClient, config: Configuration) {
   }
 
   def extractTitles(nitroEpisode: NodeSeq) = {
-    val episode = (nitroEpisode \ "title" headOption).getOrElse(nitroEpisode \ "presentation_title")
+    val episode = (nitroEpisode \ "title" headOption).getOrElse(nitroEpisode \ "presentation_title").text
     val brand = (nitroEpisode \ "ancestors_titles" \ "brand" \\ "title").headOption.map(_.text)
     val seriesTitles = (nitroEpisode \ "ancestors_titles" \ "series" \\ "title").reverse.take(2).reverse
     val series = seriesTitles.headOption.map(_.text.trim)
     val subseries = seriesTitles.drop(1).headOption.map(_.text)
     val position = (nitroEpisode \ "episode_of" \ "@position").headOption.map(_.text.toInt)
 
-    NitroTitles(episode text, brand, series, subseries, position)
+    NitroTitles(episode, brand, series, subseries, position)
   }
 
   private def parseEpisode(bodyXml: Elem): Episode = {

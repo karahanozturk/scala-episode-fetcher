@@ -34,7 +34,6 @@ class EpisodeControllerTest extends Specification with Mockito {
 
     "return Not Found response when episode does not exist" in {
       service.episodes("pid") returns Future.successful(None)
-
       val result = controller.episodes("pid")(FakeRequest(GET, "/episodes"))
       status(result) must equalTo(NOT_FOUND)
     }
