@@ -1,7 +1,8 @@
-Feature: Episodes are fetched from Nitro
+Feature: Fetch episodes from Nitro
   As IBL
-  I want to fetch episodes from Nitro into a Cache
+  We want to fetch episodes from Nitro into a Cache
   So that we can deliver fast services to our clients
+
 
   Scenario: Episode exists in Nitro
     Given an episode with pid "p00lfrb3" exists in Nitro
@@ -19,6 +20,7 @@ Feature: Episodes are fetched from Nitro
     And the following image attributes:
       | standard                                                | type  |
       | http://ichef.bbci.co.uk/images/ic/{recipe}/p01h7ms3.jpg | image |
+
 
   Scenario: Episode does not exist in Nitro
     Given an episode with pid "p00lfrb3" doesn't exists in Nitro
