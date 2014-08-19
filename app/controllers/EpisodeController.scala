@@ -15,7 +15,7 @@ class EpisodeController @Inject()(fetcher: EpisodeFetcher) extends Controller {
 
   def episodes(pid: String) = Action.async {
     fetcher.fetch(pid) map {
-      case episode => Ok(write(episode))
+      case Some(episode) => Ok(write(episode))
       case None => NotFound
     }
   }
