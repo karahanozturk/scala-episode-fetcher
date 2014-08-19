@@ -32,6 +32,5 @@ libraryDependencies ++= Seq(
   "com.github.tomakehurst" % "wiremock" % "1.46" % "test",
   "info.cukes" % "cucumber-scala_2.10" % "1.1.8" % "test",
   "info.cukes" % "cucumber-junit" % "1.1.8" % "test",
-  "info.cukes" % "cucumber-picocontainer" % "1.1.8" % "test",
-  "org.scalatest" %% "scalatest" % "1.9.2" % "test"
+  "info.cukes" % "cucumber-picocontainer" % "1.1.8" % "test"
 )

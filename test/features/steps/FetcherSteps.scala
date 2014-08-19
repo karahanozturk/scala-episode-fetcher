@@ -5,9 +5,9 @@ import cucumber.api.DataTable
 import cucumber.api.scala.{EN, ScalaDsl}
 import org.json4s.jackson.JsonMethods._
 import org.json4s.{DefaultFormats, _}
-import org.scalatest.matchers.ShouldMatchers
+import org.specs2.matcher.ShouldMatchers
 import play.api.test.{FakeApplication, TestServer}
-import prefetcher.{HttpClient, Response, Synopses, Image}
+import prefetcher.{HttpClient, Image, Response, Synopses}
 import util.MockServer
 
 import scala.collection.JavaConverters._
@@ -49,30 +49,38 @@ class FetcherSteps extends ScalaDsl with EN with ShouldMatchers {
   }
 
   Then( """^it returns (\d+) response$""") { (status: Int) =>
-    result.get.status should be(status)
+    result.get.status should equalTo(status)
   }
 
   Then( """^the episode has the expected attributes$""") { () =>
     val json = parse(result.get.body)
-
-    println(json)
-
-    (json \ "pid").extract[String] should be("p00lfrb3")
     (json \ "synopses").extract[Synopses] should be(Synopses("Short Synopsis", "Medium Synopsis", "Long Synopsis"))
     (json \ "image").extract[Image] should be(Image("http://ichef.bbci.co.uk/images/ic/{recipe}/p01h7ms3.jpg", "image"))
-    (json \ "parent_id").extract[String] should be("b00ffbjg")
-    (json \ "release_date").extract[String] should be("12 Nov 1972")
-    (json \ "title").extract[String] should be("D-Day 70")
-    (json \ "subtitle").extract[String] should be("The Heroes Return: 1. The First Impact")
   }
 
   And( """^the episode has the following attributes:$""") { (data: DataTable) =>
-    val json = parse(result.get.body)
+    assertWithDataMatrix(parse(result.get.body), data)
+  }
+
+  And( """^the following titles:$""") { (data: DataTable) =>
+    assertWithDataMatrix(parse(result.get.body), data)
+  }
+
+  And( """^the following synopses:$""") { (data: DataTable) =>
+    assertWithDataMatrix(parse(result.get.body) \ "synopses", data)
+  }
+
+  And( """^the following image attributes:$""") { (data: DataTable) =>
+    assertWithDataMatrix(parse(result.get.body) \ "image", data)
+  }
+
+  def assertWithDataMatrix(json: JValue, data: DataTable) {
     val listOfMaps = data.asMaps(classOf[String], classOf[String]).asScala
     listOfMaps.foreach(keyValueMap =>
       keyValueMap.asScala.foreach(keyVal =>
         (json \ keyVal._1).extract[String] should be(keyVal._2)))
   }
+
 
   def assertJson(keyVal: (String, String)): scala.Unit = {
     val json = parse(result.get.body)
